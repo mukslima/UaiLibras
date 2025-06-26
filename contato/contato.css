@@ -1,0 +1,138 @@
+/* Cabeçalho com menu padrão */
+
+header {
+  background-color: white;
+  padding: 1rem 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 100px;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.menu a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.menu a:hover {
+  color: red;
+}
+
+.contato-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(to right, #1a1a1a, #262626);
+  color: white;
+}
+
+.contato-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contato-info {
+  flex: 1;
+  background: linear-gradient(#7B0000);
+  color: white;
+  padding: 2rem;
+  min-width: 300px;
+}
+
+.contato-info h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.contato-info p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.contato-lista {
+  list-style: none;
+  padding: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.contato-formulario {
+  flex: 2;
+  padding: 2rem;
+  min-width: 300px;
+}
+
+.contato-formulario form {
+  display: flex;
+  flex-direction: column;
+}
+
+.linha {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.campo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.campo label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.campo label span {
+  color: red;
+  margin-left: 4px;
+}
+
+.campo input,
+.campo textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  resize: none;
+}
+
+.contato-formulario button {
+  align-self: flex-end;
+  padding: 0.8rem 2rem;
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contato-formulario button:hover {
+  background-color: red;
+}

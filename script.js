@@ -23,3 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showImage(current);
 });
+
+// Modal
+const modal = document.getElementById("modal");
+const abrirBtn = document.getElementById("abrirModal");
+const fecharBtn = document.querySelector(".fechar");
+
+abrirBtn.onclick = () => modal.style.display = "flex";
+fecharBtn.onclick = () => modal.style.display = "none";
+
+// Fecha modal clicando fora do conteúdo
+window.onclick = (event) => {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
