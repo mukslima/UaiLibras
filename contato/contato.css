@@ -36,9 +36,14 @@ header {
 }
 
 .contato-section {
-  padding: 4rem 2rem;
-  background: linear-gradient(to right, #1a1a1a, #262626);
+  width: 100vw;
+  min-height: 60vh;
+  background: #111;
   color: white;
+  padding: 4rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .contato-container {
