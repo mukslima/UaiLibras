@@ -61,8 +61,8 @@ header {
   flex: 1;
   background: linear-gradient(#7B0000);
   color: white;
-  padding: 2rem;
-  min-width: 300px;
+  padding: 6rem;
+  min-width: 500px;
 }
 
 .contato-info h2 {
