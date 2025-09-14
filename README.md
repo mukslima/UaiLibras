@@ -15,6 +15,10 @@ Ainda sem data definida — acompanhe nossas redes sociais para atualizações!
 
 Este site será dedicado a [UaiLibras].
 
+## Objetivo futura
+
+Migrar pra ruby on rails ou Next.js
+
 ---
 
 Obrigado pela paciência!  
