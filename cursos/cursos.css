@@ -7,12 +7,17 @@
 .cursos-header h1 {
   font-size: 2.2rem;
   color: #FF0000;
+  margin-bottom: 1rem;
 }
 
 .cursos-header p {
   font-size: 1.1rem;
   color: #444;
   margin-top: 1rem;
+  max-width: 800px;   /* limite de largura */
+  margin: 0 auto;     /* centraliza horizontalmente */
+  line-height: 1.6;   /* deixa mais legível */
+  text-align: justify; /* justifica o texto */
 }
 
 /* Lista de cursos */
