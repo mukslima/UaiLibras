@@ -23,3 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showImage(current);
 });
+
+// Menu responsivo
+const hamburger = document.getElementById("hamburger");
+const menuList = document.getElementById("menu-list");
+
+hamburger.addEventListener("click", () => {
+  menuList.classList.toggle("active");
+});
