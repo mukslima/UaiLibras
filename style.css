@@ -303,6 +303,58 @@ header {
   background-color: gray;
 }
 
+/* Nossas Parcerias */
+.parceiros {
+  padding: 5rem 0;
+  background-color: #fff;
+  text-align: center;
+}
+
+.parceiros h2 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.parceiros-carousel {
+  overflow: hidden;
+  width: 100%;
+}
+
+.parceiros-track {
+  display: flex;
+  width: max-content;
+  gap: 3rem;
+  animation: scrollParceiros 40s linear infinite;
+}
+
+.parceiros-track img {
+  height: 150px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.parceiros-track img:hover {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.parceiros-carousel:hover .parceiros-track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollParceiros {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
 
 /* Call to Action (Antes do footer principal) */
 .cta {
