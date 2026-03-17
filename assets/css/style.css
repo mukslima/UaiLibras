@@ -339,7 +339,7 @@ header {
   display: flex;
   width: max-content;
   gap: 3rem;
-  animation: scrollParceiros 40s linear infinite;
+  animation: scrollParceiros 20s linear infinite;
 }
 
 .parceiros-track img {
