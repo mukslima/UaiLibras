@@ -1,25 +1,39 @@
-# 🚧 Site em Construção 🚧
+# 🤟 UaiLibras — Frontend
 
-Bem-vindo! Este site ainda está em desenvolvimento.
+Frontend do **UaiLibras**, plataforma voltada à divulgação de cursos, notícias, eventos e iniciativas relacionadas à **Libras, acessibilidade e comunidade surda**.
 
-## 🔧 Status do Projeto
+O projeto foi originalmente desenvolvido em HTML, CSS e JavaScript e posteriormente **migrado para Next.js, React e TypeScript**, preservando o conteúdo existente enquanto moderniza sua arquitetura e prepara a aplicação para integração com uma API própria.
 
-> Em construção 🛠️  
-Estamos trabalhando para trazer uma experiência incrível. Fique ligado para novidades em breve!
+## 🌐 Projeto online
 
-## 📅 Previsão de Lançamento
+**Produção:** https://uai-libras.vercel.app/
 
-Ainda sem data definida — acompanhe nossas redes sociais para atualizações!
+## 🚀 Tecnologias
 
-## 💡 Sobre o Projeto
+- Next.js
+- React
+- TypeScript
+- App Router
+- CSS
+- Font Awesome
+- Vercel
 
-Este site será dedicado a [UaiLibras].
+## ✨ Principais funcionalidades
 
-## Objetivo futura
+- Interface pública responsiva
+- Navegação desktop e mobile
+- Página inicial com carrossel
+- Listagem e visualização de notícias
+- Páginas de cursos
+- FAQ interativo
+- Páginas institucionais
+- Componentização de elementos reutilizáveis
+- SEO com sitemap e robots.txt
+- Deploy contínuo na Vercel
 
-Migrar pra ruby on rails ou Next.js
+## 🔄 Modernização do projeto
 
----
+A primeira versão do UaiLibras utilizava:
 
-Obrigado pela paciência!  
-**[Marcos AND Lima - UaiLibras]**
+```text
+HTML + CSS + JavaScript
