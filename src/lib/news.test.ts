@@ -117,6 +117,17 @@ test("sanitizePublicRichText preserves rich text and strips unsafe HTML", () => 
   assert.match(sanitized, /<img src="https:\/\/cdn.test\/a.jpg" alt="A">/);
 });
 
+test("sanitizePublicRichText preserves editorial alignment classes only", () => {
+  const html =
+    '<p class="text-align-center bad-class">Texto</p><img src="https://cdn.test/a.jpg" class="image-size-small image-align-right evil" onerror="x()"><iframe src="https://bad.test"></iframe>';
+
+  const sanitized = sanitizePublicRichText(html);
+
+  assert.match(sanitized, /class="text-align-center"/);
+  assert.match(sanitized, /class="image-size-small image-align-right"/);
+  assert.doesNotMatch(sanitized, /bad-class|evil|onerror|iframe/);
+});
+
 test("formatPublishedDate formats valid dates and ignores invalid values", () => {
   assert.equal(formatPublishedDate("2026-08-22T12:00:00.000Z"), "22/08/2026");
   assert.equal(formatPublishedDate(null), null);

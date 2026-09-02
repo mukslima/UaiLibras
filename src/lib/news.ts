@@ -194,6 +194,27 @@ function isSafeUrl(value: string, allowRelative = false) {
   }
 }
 
+const allowedRichTextClasses = new Set([
+  "text-align-left",
+  "text-align-center",
+  "text-align-right",
+  "text-align-justify",
+  "image-size-small",
+  "image-size-medium",
+  "image-size-large",
+  "image-size-full",
+  "image-align-left",
+  "image-align-center",
+  "image-align-right",
+]);
+
+function sanitizeClassList(value: string) {
+  return value
+    .split(/\s+/)
+    .filter((className) => allowedRichTextClasses.has(className))
+    .join(" ");
+}
+
 export function sanitizePublicRichText(content: string) {
   const allowedTags = new Set(["p", "br", "strong", "em", "u", "s", "blockquote", "ul", "ol", "li", "a", "h2", "h3", "h4", "img"]);
   const withoutDangerousBlocks = content.replace(/<\s*(script|style|iframe|object|embed|svg|math)[\s\S]*?<\s*\/\s*\1\s*>/gi, "");
@@ -222,6 +243,11 @@ export function sanitizePublicRichText(content: string) {
       if (normalizedTag === "img" && ["src", "alt", "title"].includes(name)) {
         if (name === "src" && !isSafeUrl(value)) continue;
         attrs.push(`${name}="${escapeAttribute(value)}"`);
+      }
+
+      if (["p", "h2", "h3", "h4", "blockquote", "img"].includes(normalizedTag) && name === "class") {
+        const safeClass = sanitizeClassList(value);
+        if (safeClass) attrs.push(`class="${escapeAttribute(safeClass)}"`);
       }
     }
 
