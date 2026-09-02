@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { HomeCarousel } from "@/components/HomeCarousel";
-import { asset, newsArticles, partnerLogos } from "@/data/site";
+import { NewsImage } from "@/components/NewsImage";
+import { asset, partnerLogos } from "@/data/site";
+import { getNewsListState, getNewsUrl, type PublicNews } from "@/lib/news";
 
 const courseCards = [
   {
@@ -30,72 +32,22 @@ const courseCards = [
   },
 ];
 
-const carouselSlides = [
-  {
-    title: newsArticles.curso.title,
-    description: "Estão abertas as inscrições para os cursos de Libras — até 10 de Agosto!",
-    href: newsArticles.curso.href,
-    image: newsArticles.curso.image,
-    alt: "curso de libras para iniciantes uaiLibras",
-  },
-  {
-    title: "UaiLibras marca presença no maior festival de circo do mundo",
-    description:
-      "Levamos Libras e acessibilidade para o Festival Mundial do Circo, promovendo inclusão para pessoas surdas!",
-    href: newsArticles.circo.href,
-    image: newsArticles.circo.image,
-    alt: "Uai marca presença no circo",
-  },
-  {
-    title: "Intérpretes surdas? Sim! Descubra como isso transforma a Libras",
-    description:
-      "Promovemos a inclusão de surdos e ouvintes com intérpretes surdas — uma nova forma de representar a comunidade com protagonismo.",
-    href: newsArticles.interprete.href,
-    image: newsArticles.interprete.image,
-    alt: "Interprete surdos existe",
-  },
-  {
-    title: "UaiLibras vence o ExpoFavela 2024!",
-    description:
-      "Nosso projeto foi destaque nacional e levou o prêmio de melhor organização no maior evento de empreendedorismo de favela do Brasil.",
-    href: newsArticles.expofavela.href,
-    image: newsArticles.expofavela.image,
-    alt: "uaiLibras destaque na nacional",
-  },
-];
+export default async function Home() {
+  const newsState = await getNewsListState(12);
+  const carouselNews = [
+    newsState.featured.main,
+    ...newsState.featured.secondary,
+    ...newsState.featured.normal,
+  ].filter((news): news is PublicNews => Boolean(news));
+  const carouselSlides = carouselNews.map((news) => ({
+    title: news.title,
+    description: news.summary,
+    href: getNewsUrl(news),
+    image: news.coverImage?.url ?? asset("06.png"),
+    alt: news.coverImage?.originalName ?? news.title,
+  }));
+  const homeNews = newsState.news.slice(0, 4);
 
-const homeNews = [
-  {
-    title: "Nova Turma de Libras Iniciante!",
-    description: newsArticles.curso.excerpt,
-    image: newsArticles.curso.image,
-    alt: "Curso de Libras",
-    href: newsArticles.curso.href,
-  },
-  {
-    title: "UaiLibras no Festival Mundial do Circo",
-    description: newsArticles.circo.excerpt,
-    image: newsArticles.circo.image,
-    alt: "UaiLibras no Circo",
-    href: newsArticles.circo.href,
-  },
-  {
-    title: "Intérpretes Surdos em Destaque",
-    description: newsArticles.interprete.excerpt,
-    image: newsArticles.interprete.image,
-    alt: "Intérpretes Surdas",
-    href: newsArticles.interprete.href,
-  },
-  {
-    title: "UAI Libras é Destaque Nacional em 2024",
-    description: "Projeto premiado como referência em inclusão e educação para a comunidade surda.",
-    image: newsArticles.expofavela.image,
-    alt: "UaiLibras na ExpoFavela",
-    href: newsArticles.expofavela.href,
-  },
-];
-
-export default function Home() {
   return (
     <>
       <main>
@@ -122,20 +74,25 @@ export default function Home() {
 
       <section id="noticias" className="noticias">
         <h2>Notícias</h2>
-        <div className="noticias-grid">
-          {homeNews.map((item) => (
-            <article className="noticia-card" key={item.href}>
-              <img src={item.image} alt={item.alt} />
-              <div className="conteudo">
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <Link href={item.href} className="btn-leia-mais">
-                  Leia mais
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+        {newsState.status === "error" ? <p className="noticias-status">{newsState.message}</p> : null}
+        {homeNews.length === 0 ? (
+          <p className="noticias-status">Nenhuma notícia publicada no momento.</p>
+        ) : (
+          <div className="noticias-grid">
+            {homeNews.map((item) => (
+              <article className="noticia-card" key={item.slug}>
+                <NewsImage news={item} />
+                <div className="conteudo">
+                  <h3>{item.title}</h3>
+                  <p>{item.summary}</p>
+                  <Link href={getNewsUrl(item)} className="btn-leia-mais">
+                    Leia mais
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="cta">

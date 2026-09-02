@@ -19,12 +19,18 @@ export function HomeCarousel({ slides }: HomeCarouselProps) {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
+    if (slides.length === 0) return;
+
     const timer = window.setInterval(() => {
       setCurrent((index) => (index + 1) % slides.length);
     }, 5000);
 
     return () => window.clearInterval(timer);
   }, [slides.length]);
+
+  if (slides.length === 0) {
+    return null;
+  }
 
   const showPrevious = () => {
     setCurrent((index) => (index - 1 + slides.length) % slides.length);

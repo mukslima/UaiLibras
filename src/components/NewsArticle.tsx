@@ -1,33 +1,50 @@
-type Article = {
-  title: string;
-  author: string;
-  date: string;
-  image: string;
-  imageAlt: string;
-  subtitle: string;
-  paragraphs: readonly string[];
-};
+import { NewsImage } from "@/components/NewsImage";
+import type { PublicNews } from "@/lib/news";
+import { formatPublishedDate, sanitizePublicRichText } from "@/lib/news";
 
 type NewsArticleProps = {
-  article: Article;
+  article: PublicNews;
 };
 
 export function NewsArticle({ article }: NewsArticleProps) {
+  const publishedDate = formatPublishedDate(article.publishedAt);
+  const categoryNames = article.categories.map((category) => category.name);
+  const tagNames = article.tags.map((tag) => tag.name);
+
   return (
     <main>
       <article className="noticia-detalhe">
         <h1 className="noticia-titulo">{article.title}</h1>
         <div className="noticia-meta">
-          <span className="noticia-autor">
-            Por <strong>{article.author}</strong>
-          </span>
-          <span className="noticia-data">{article.date}</span>
+          {article.author?.name ? (
+            <span className="noticia-autor">
+              Por <strong>{article.author.name}</strong>
+            </span>
+          ) : null}
+          {publishedDate ? <span className="noticia-data">Publicado em {publishedDate}</span> : null}
         </div>
-        <img src={article.image} alt={article.imageAlt} className="noticia-img" />
-        <h2 className="noticia-subtitulo">{article.subtitle}</h2>
-        {article.paragraphs.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
+        <NewsImage news={article} className="noticia-img" />
+        <p className="noticia-subtitulo">{article.summary}</p>
+        {categoryNames.length > 0 ? (
+          <div className="noticia-taxonomia" aria-label="Categorias">
+            {categoryNames.map((category) => (
+              <span className="categoria" key={category}>
+                {category}
+              </span>
+            ))}
+          </div>
+        ) : null}
+        <div
+          className="noticia-conteudo"
+          dangerouslySetInnerHTML={{ __html: sanitizePublicRichText(article.content) }}
+        />
+        {tagNames.length > 0 ? (
+          <div className="noticia-tags" aria-label="Tags">
+            {tagNames.map((tag) => (
+              <span key={tag}>#{tag}</span>
+            ))}
+          </div>
+        ) : null}
       </article>
     </main>
   );

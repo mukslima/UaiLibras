@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { newsArticles } from "@/data/site";
+import { NewsImage } from "@/components/NewsImage";
+import { getNewsListState, getNewsUrl } from "@/lib/news";
 
 export const metadata: Metadata = {
   title: "Notícias sobre Libras e Inclusão | UaiLibras",
@@ -8,51 +9,62 @@ export const metadata: Metadata = {
     "Acompanhe as notícias da UaiLibras sobre Libras, inclusão, acessibilidade e eventos da comunidade surda.",
 };
 
-export default function NoticiaPage() {
+export default async function NoticiaPage() {
+  const newsState = await getNewsListState(20);
+  const { main, secondary, normal } = newsState.featured;
+
   return (
     <main>
       <h1>Notícias</h1>
-      <section className="noticias-destaques">
-        <Link href={newsArticles.curso.href} className="noticia-principal">
-          <div className="noticia-principal">
-            <img src={newsArticles.curso.image} alt="Destaque principal" />
-            <div className="conteudo">
-              <span className="categoria">{newsArticles.curso.category}</span>
-              <h2>{newsArticles.curso.title}</h2>
-              <ul>
-                {newsArticles.curso.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Link>
-
-        <div className="noticia-secundarias">
-          {[newsArticles.circo, newsArticles.interprete].map((article) => (
-            <Link href={article.href} className="noticia-sec" key={article.href}>
-              <div className="noticia-sec">
-                <img src={article.image} alt={article.imageAlt} />
+      {newsState.status === "error" ? <p className="noticias-status">{newsState.message}</p> : null}
+      {newsState.news.length === 0 ? <p className="noticias-status">Nenhuma notícia publicada no momento.</p> : null}
+      {main || secondary.length > 0 ? (
+        <section className="noticias-destaques">
+          {main ? (
+            <Link href={getNewsUrl(main)} className="noticia-principal">
+              <div className="noticia-principal">
+                <NewsImage news={main} />
                 <div className="conteudo">
-                  <span className="categoria">{article.category}</span>
-                  <h3>{article.title.replace("!", "")}</h3>
+                  {main.primaryCategory?.name ? <span className="categoria">{main.primaryCategory.name}</span> : null}
+                  <h2>{main.title}</h2>
+                  <p>{main.summary}</p>
                 </div>
               </div>
             </Link>
-          ))}
-        </div>
-      </section>
+          ) : null}
+
+          {secondary.length > 0 ? (
+            <div className="noticia-secundarias">
+              {secondary.map((article) => (
+                <Link href={getNewsUrl(article)} className="noticia-sec" key={article.slug}>
+                  <div className="noticia-sec">
+                    <NewsImage news={article} />
+                    <div className="conteudo">
+                      {article.primaryCategory?.name ? (
+                        <span className="categoria">{article.primaryCategory.name}</span>
+                      ) : null}
+                      <h3>{article.title}</h3>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : null}
+        </section>
+      ) : null}
 
       <section className="noticias-lista">
-        <Link href={newsArticles.expofavela.href} className="card-link">
-          <div className="card-horizontal">
-            <img src={newsArticles.expofavela.image} alt={newsArticles.expofavela.imageAlt} />
-            <div className="conteudo">
-              <h4>{newsArticles.expofavela.title}</h4>
-              <p>{newsArticles.expofavela.excerpt}</p>
+        {normal.map((article) => (
+          <Link href={getNewsUrl(article)} className="card-link" key={article.slug}>
+            <div className="card-horizontal">
+              <NewsImage news={article} />
+              <div className="conteudo">
+                <h4>{article.title}</h4>
+                <p>{article.summary}</p>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        ))}
       </section>
     </main>
   );

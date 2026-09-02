@@ -133,29 +133,71 @@ npm run build
 - [x] Componentização da interface
 - [x] Estrutura responsiva
 - [x] Deploy na Vercel
+- [x] Painel administrativo
+- [x] Integração com API REST
+- [x] Conteúdo dinâmico
+- [x] Workflow editorial no frontend
 
 ### 🚧 Em desenvolvimento
 
-- [ ] Painel administrativo
-- [ ] Integração com API REST
-- [ ] Conteúdo dinâmico
-- [ ] Workflow editorial no frontend
+- [ ] Finalização e deploy de produção
+- [ ] Otimizações de performance e SEO
+- [ ] Evolução da experiência de usuário (UX/UI)
+- [ ] Conteúdo em vídeo/Libras
+- [ ] Melhorias de acessibilidade
 
 ### 🔮 Evoluções futuras
 
-- [ ] Conteúdo em vídeo/Libras
-- [ ] Melhorias de acessibilidade
-- [ ] Evolução da experiência de usuário (UX/UI)
-- [ ] Otimizações de performance e SEO
+- [ ] Recuperação de senha por e-mail
+- [ ] Alteração de senha pelo usuário
+- [ ] Aprimoramento da gestão de usuários
+- [ ] Busca e filtros avançados de conteúdo
+- [ ] Analytics e métricas do portal
+- [ ] Expansão dos recursos editoriais
+- [ ] Novas integrações conforme necessidade
 
 ## 👨‍💻 Desenvolvimento
 
 Desenvolvido e mantido por **Marcos AND Lima**.
 
 GitHub: **@mukslima**
+=======
+# UaiLibras Frontend
 
----
+Site publico do UaiLibras em Next.js.
+
+## Integracao com backend
+
+As noticias publicas sao carregadas da API do `uailibras-backend`.
+
+Configure o frontend com:
+
+```text
+UAILIBRAS_API_URL=http://localhost:3333
+```
+
+Em desenvolvimento local, suba o backend e depois execute:
+
+```bash
+npm run dev
+```
+
+Endpoints consumidos:
+
+- `GET /api/v1/news`
+- `GET /api/v1/news/:slug`
+
+A API publica retorna apenas noticias `PUBLISHED`. O frontend usa `featuredPosition` para separar destaque principal (`1`), destaques secundarios (`2` e `3`) e noticias normais, com revalidacao de 5 minutos.
 
 ## 🤟 UaiLibras
 
 **Comunicar, Aprender & Incluir.**
+
+## Qualidade
+
+```bash
+npm run typecheck
+npm run lint
+npm test
+npm run build
+```
