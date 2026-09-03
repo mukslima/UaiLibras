@@ -174,6 +174,7 @@ Configure o frontend com:
 
 ```text
 UAILIBRAS_API_URL=http://localhost:3333
+UAILIBRAS_SITE_URL=
 ```
 
 Em desenvolvimento local, suba o backend e depois execute:
@@ -187,7 +188,7 @@ Endpoints consumidos:
 - `GET /api/v1/news`
 - `GET /api/v1/news/:slug`
 
-A API publica retorna apenas noticias `PUBLISHED`. O frontend usa `featuredPosition` para separar destaque principal (`1`), destaques secundarios (`2` e `3`) e noticias normais, com revalidacao de 5 minutos.
+A API publica retorna apenas noticias `PUBLISHED`. O frontend usa `featuredPosition` para separar destaque principal (`1`), destaques secundarios (`2` e `3`) e noticias normais. As buscas usam `cache: "no-store"` para refletir publicacao e despublicacao imediatamente.
 
 ## 🤟 UaiLibras
 

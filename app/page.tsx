@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { HomeCarousel } from "@/components/HomeCarousel";
 import { NewsImage } from "@/components/NewsImage";
 import { asset, partnerLogos } from "@/data/site";
@@ -110,7 +111,7 @@ export default async function Home() {
         <div className="parceiros-carousel">
           <div className="parceiros-track">
             {[...partnerLogos, ...partnerLogos].map((logo, index) => (
-              <img src={asset(logo)} alt={logo.replace(/\.[^.]+$/, "")} key={`${logo}-${index}`} />
+              <Image src={asset(logo)} alt={logo.replace(/\.[^.]+$/, "")} key={`${logo}-${index}`} width={220} height={150} />
             ))}
           </div>
         </div>

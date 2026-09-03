@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { getConfiguredSiteUrl } from "@/lib/site-url";
 import "@/styles/globals.css";
 
+const siteUrl = getConfiguredSiteUrl();
+
 export const metadata: Metadata = {
+  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   title: {
     default: "Uai Libras | Cursos de Libras e Acessibilidade no Brasil",
     template: "%s",
@@ -15,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Curso de Libras - UaiLibras",
     description: "Aprenda Libras do básico ao avançado com inclusão e acessibilidade.",
-    images: ["https://www.uailibras.com.br/assets/imgs/06.png"],
+    images: siteUrl ? ["/assets/imgs/06.png"] : undefined,
     type: "website",
   },
   verification: {
@@ -31,7 +35,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        <link rel="canonical" href="https://www.uailibras.com.br/" />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"

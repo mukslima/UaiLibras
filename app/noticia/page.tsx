@@ -12,23 +12,22 @@ export const metadata: Metadata = {
 export default async function NoticiaPage() {
   const newsState = await getNewsListState(20);
   const { main, secondary, normal } = newsState.featured;
+  const hasFeaturedNews = Boolean(main || secondary.length > 0);
 
   return (
-    <main>
+    <main className={hasFeaturedNews ? undefined : "noticias-sem-destaques"}>
       <h1>Notícias</h1>
       {newsState.status === "error" ? <p className="noticias-status">{newsState.message}</p> : null}
       {newsState.news.length === 0 ? <p className="noticias-status">Nenhuma notícia publicada no momento.</p> : null}
-      {main || secondary.length > 0 ? (
+      {hasFeaturedNews ? (
         <section className="noticias-destaques">
           {main ? (
             <Link href={getNewsUrl(main)} className="noticia-principal">
-              <div className="noticia-principal">
-                <NewsImage news={main} />
-                <div className="conteudo">
-                  {main.primaryCategory?.name ? <span className="categoria">{main.primaryCategory.name}</span> : null}
-                  <h2>{main.title}</h2>
-                  <p>{main.summary}</p>
-                </div>
+              <NewsImage news={main} />
+              <div className="conteudo">
+                {main.primaryCategory?.name ? <span className="categoria">{main.primaryCategory.name}</span> : null}
+                <h2>{main.title}</h2>
+                <p>{main.summary}</p>
               </div>
             </Link>
           ) : null}
@@ -37,14 +36,12 @@ export default async function NoticiaPage() {
             <div className="noticia-secundarias">
               {secondary.map((article) => (
                 <Link href={getNewsUrl(article)} className="noticia-sec" key={article.slug}>
-                  <div className="noticia-sec">
-                    <NewsImage news={article} />
-                    <div className="conteudo">
-                      {article.primaryCategory?.name ? (
-                        <span className="categoria">{article.primaryCategory.name}</span>
-                      ) : null}
-                      <h3>{article.title}</h3>
-                    </div>
+                  <NewsImage news={article} />
+                  <div className="conteudo">
+                    {article.primaryCategory?.name ? (
+                      <span className="categoria">{article.primaryCategory.name}</span>
+                    ) : null}
+                    <h3>{article.title}</h3>
                   </div>
                 </Link>
               ))}

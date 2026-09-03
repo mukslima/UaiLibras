@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { footerCourses } from "@/data/site";
+import packageJson from "../../package.json";
 
 export function Footer() {
   return (
@@ -32,20 +33,10 @@ export function Footer() {
         </div>
         <div className="footer-column">
           <h4>Redes Sociais</h4>
-          <div className="footer-social">
-            <a href="#" aria-label="Instagram">
-              <i className="fa-brands fa-instagram" />
-            </a>
-            <a href="#" aria-label="WhatsApp">
-              <i className="fa-brands fa-whatsapp" />
-            </a>
-            <a href="#" aria-label="YouTube">
-              <i className="fa-brands fa-youtube" />
-            </a>
-          </div>
+          <p className="footer-muted">Em breve.</p>
         </div>
       </div>
-      <div className="footer-bottom">&copy; 2025 UaiLibras. Todos os direitos reservados.</div>
+      <div className="footer-bottom">&copy; 2026 UaiLibras &middot; v{packageJson.version}</div>
     </footer>
   );
 }

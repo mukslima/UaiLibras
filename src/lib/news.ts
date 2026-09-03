@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 export const NEWS_FETCH_CACHE: RequestCache = "no-store";
 
 export type PublicUser = {
@@ -131,7 +133,9 @@ export async function fetchPublicNews(pageSize = 20): Promise<PublicNews[]> {
   return (data.items ?? []).map(mapNewsItem);
 }
 
-export async function fetchPublicNewsBySlug(slug: string): Promise<PublicNews | null> {
+export const fetchPublicNewsBySlug = cache(async function fetchPublicNewsBySlug(
+  slug: string,
+): Promise<PublicNews | null> {
   const fetchOptions: NextFetchRequestInit = {
     cache: NEWS_FETCH_CACHE,
   };
@@ -146,7 +150,7 @@ export async function fetchPublicNewsBySlug(slug: string): Promise<PublicNews | 
   }
 
   return mapNewsItem((await response.json()) as PublicNewsApiItem);
-}
+});
 
 export async function getNewsListState(pageSize = 20): Promise<NewsListState> {
   try {

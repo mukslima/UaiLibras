@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { asset } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -84,13 +85,11 @@ export default function CursosPage() {
         {courses.map((course) => (
           <article className="curso-detalhe" id={course.id} key={course.id}>
             <div className="curso-img">
-              <img src={asset("curso-uai.jpg")} alt={course.alt} />
+              <Image src={asset("curso-uai.jpg")} alt={course.alt} width={400} height={300} />
             </div>
             <div className="curso-info">
               <h2>{course.title}</h2>
-              <ul>
-                <p>{course.description}</p>
-              </ul>
+              <p>{course.description}</p>
               <p className="curso-beneficio">{course.benefit}</p>
             </div>
           </article>

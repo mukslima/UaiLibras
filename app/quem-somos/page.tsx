@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { asset } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export default function QuemSomosPage() {
       <section className="quem-somos">
         <h1>Quem somos</h1>
         <div className="grupo">
-          <img src={asset("curso-uai.jpg")} alt="Grupo Uai Libras" />
+          <Image src={asset("curso-uai.jpg")} alt="Grupo Uai Libras" width={400} height={300} />
           <div className="texto">
             <p>
               A UaiLibras nasceu com o propósito de transformar a inclusão em realidade. Nossa missão é
@@ -32,7 +33,7 @@ export default function QuemSomosPage() {
 
         <h2>Fundadores</h2>
         <div className="pessoa">
-          <img src={asset("expofavela-uai.png")} alt="Fundadores do UAI Libras" />
+          <Image src={asset("expofavela-uai.png")} alt="Fundadores do UAI Libras" width={400} height={300} />
           <div className="texto">
             <p>
               Nascido em Belo Horizonte, Eduardo Lacerda sempre teve um olhar atento para as questões

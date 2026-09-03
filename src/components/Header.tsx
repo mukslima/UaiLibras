@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { asset, navLinks } from "@/data/site";
 
 export function Header() {
@@ -12,7 +13,7 @@ export function Header() {
       <div className="container">
         <div className="logo">
           <Link href="/" aria-label="Página inicial UaiLibras">
-            <img src={asset("06.png")} alt="Logo UaiLibras" />
+            <Image src={asset("06.png")} alt="Logo UaiLibras" width={250} height={220} priority />
           </Link>
         </div>
         <nav className="menu" aria-label="Menu principal">
