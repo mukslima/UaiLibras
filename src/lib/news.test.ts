@@ -55,9 +55,11 @@ test("partitionFeaturedNews keeps empty featured slots empty", () => {
 
 test("fetchPublicNews maps public API relations and optional fields", async () => {
   const originalFetch = globalThis.fetch;
+  let requestInit: RequestInit | undefined;
 
-  globalThis.fetch = (async () =>
-    new Response(
+  globalThis.fetch = (async (_input, init) => {
+    requestInit = init;
+    return new Response(
       JSON.stringify({
         items: [
           {
@@ -77,11 +79,13 @@ test("fetchPublicNews maps public API relations and optional fields", async () =
         ],
       }),
       { status: 200 },
-    )) as typeof fetch;
+    );
+  }) as typeof fetch;
 
   try {
     const [article] = await fetchPublicNews();
 
+    assert.equal(requestInit?.cache, "no-store");
     assert.equal(article.title, "Noticia publicada");
     assert.equal(article.featuredPosition, 1);
     assert.equal(article.categories[0].name, "Curso");
@@ -94,9 +98,14 @@ test("fetchPublicNews maps public API relations and optional fields", async () =
 
 test("fetchPublicNewsBySlug returns null on 404 and throws on API error", async () => {
   const originalFetch = globalThis.fetch;
+  let requestInit: RequestInit | undefined;
 
-  globalThis.fetch = (async () => new Response(JSON.stringify({ message: "Not found" }), { status: 404 })) as typeof fetch;
+  globalThis.fetch = (async (_input, init) => {
+    requestInit = init;
+    return new Response(JSON.stringify({ message: "Not found" }), { status: 404 });
+  }) as typeof fetch;
   assert.equal(await fetchPublicNewsBySlug("inexistente"), null);
+  assert.equal(requestInit?.cache, "no-store");
 
   globalThis.fetch = (async () => new Response(JSON.stringify({ message: "Erro" }), { status: 500 })) as typeof fetch;
   await assert.rejects(() => fetchPublicNewsBySlug("erro"), /Nao foi possivel carregar a noticia/);

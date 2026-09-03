@@ -1,4 +1,4 @@
-export const NEWS_REVALIDATE_SECONDS = 300;
+export const NEWS_FETCH_CACHE: RequestCache = "no-store";
 
 export type PublicUser = {
   id?: string;
@@ -119,7 +119,7 @@ export async function fetchPublicNews(pageSize = 20): Promise<PublicNews[]> {
     pageSize: String(pageSize),
   });
   const fetchOptions: NextFetchRequestInit = {
-    next: { revalidate: NEWS_REVALIDATE_SECONDS },
+    cache: NEWS_FETCH_CACHE,
   };
   const response = await fetch(`${getApiBaseUrl()}/api/v1/news?${params.toString()}`, fetchOptions);
 
@@ -133,7 +133,7 @@ export async function fetchPublicNews(pageSize = 20): Promise<PublicNews[]> {
 
 export async function fetchPublicNewsBySlug(slug: string): Promise<PublicNews | null> {
   const fetchOptions: NextFetchRequestInit = {
-    next: { revalidate: NEWS_REVALIDATE_SECONDS },
+    cache: NEWS_FETCH_CACHE,
   };
   const response = await fetch(`${getApiBaseUrl()}/api/v1/news/${encodeURIComponent(slug)}`, fetchOptions);
 
